@@ -49,7 +49,7 @@ Countries
 
 var viz = d3.select("#myDIV");
 var namesViz = d3.select("#countries");
-
+var year = 2008;
 var width = 1024,
     height = 768,
     margin = { top: 10, left: 10, right: 20, bottom: 20},
@@ -68,7 +68,7 @@ viz.attr("transform",
         "translate(" + margin.left + "," + margin.top +")")
 
 d3.json(url, function(error, result) {
-countries = result.filter(function(d) { return d.income[2008] != undefined });
+countries = result.filter(function(d) { return d.income[year] != undefined });
 render(countries);
 });
 
@@ -82,18 +82,18 @@ namesViz.selectAll("li")
         return d.name;
     })
 
-xScale.domain(d3.extent(data, function(d) { return d.income[2008]}));
-yScale.domain(d3.extent(data, function(d) { return d.lifeExpectancy[2008]}));
-radScale.domain(d3.extent(data, function(d) { return d.population[2008] }));
+xScale.domain(d3.extent(data, function(d) { return d.income[year]}));
+yScale.domain(d3.extent(data, function(d) { return d.lifeExpectancy[year]}));
+radScale.domain(d3.extent(data, function(d) { return d.population[year] }));
 
 
 var changes = viz.selectAll("circle")
  .data(data)
  .enter()
  .append("circle")
- .attr("r", function(d) { return radScale(d.population[2008]) })
- .attr("cx", function(d, i) { return xScale(d.income[2008]) })
- .attr("cy", function(d, i) { return yScale(d.lifeExpectancy[2008]) })
+ .attr("r", function(d) { return radScale(d.population[year]) })
+ .attr("cx", function(d, i) { return xScale(d.income[year]) })
+ .attr("cy", function(d, i) { return yScale(d.lifeExpectancy[year]) })
  .attr("fill", function(d, i) { return colorScale(d.region) })
  .attr("opacity", 0.8);
 
